@@ -1,9 +1,26 @@
 {% extends 'base.html' %}
 {% load qr_code %}
 
+{% block extra_css %}
+<style>
+    @media (min-width: 767px) {
+        svg{
+            width: 30%;
+            height: auto;
+        }
+    }
+    @media (min-width: 0px) and (max-width: 767px) {
+        svg{
+            width: 90%;
+            height: auto;
+        }
+    }
+
+</style>
+{% endblock extra_css %}
+
 {% block content %}
 {% include 'nav.html' %}
-
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     {% if messages %}
     <p>
@@ -20,7 +37,7 @@
     <h1>👋 Hola!!! <a href="{% url 'me' %}" class="text-danger"  data-toggle="tooltip" data-placement="top" title="Actualizar Información"><strong>{{ user.first_name }} {{ user.last_name }}</strong></a></h1>
     {% if register %}
     <div id="ticket">
-        {% qr_from_text ticket.id size="10" image_format="png" %}
+        {% qr_from_text ticket size="10" image_format="svg" %}
     </div>
     <button id="btn_print" class="btn btn-danger btn-lg"><i class="far fa-save fa-lg"></i> Guardar Ticket</button>
     <p>

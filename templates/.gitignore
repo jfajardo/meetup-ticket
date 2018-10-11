@@ -39,7 +39,7 @@ local_settings.py
 
 # pyenv
 .python-version
-
+.sqlite3
 # celery beat schedule file
 celerybeat-schedule
 

@@ -142,12 +142,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_MEETUP_KEY = 'eundh0ccrpdu6382gbcf911gp8'
-SOCIAL_AUTH_MEETUP_SECRET = 'lfcatr2ppoat4779h3s4gulfkd'
+if DEBUG:
+    SOCIAL_AUTH_MEETUP_KEY = '8help7m77qb06lcbe2tqm118ut'
+    SOCIAL_AUTH_MEETUP_SECRET = 'jtggh3ehuou3e8ikr661haq6pp'
+else:
+    SOCIAL_AUTH_MEETUP_KEY = 'eundh0ccrpdu6382gbcf911gp8'
+    SOCIAL_AUTH_MEETUP_SECRET = 'lfcatr2ppoat4779h3s4gulfkd'
+
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/'
 
 LOGIN_URL = '/auth/login/meetup/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-

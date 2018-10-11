@@ -17,26 +17,30 @@ EVENT_ID = '253612928'
 
 
 def index(request):
-    if request.user.is_authenticated:
-        if not Ticket.objects.filter(user=request.user).exists():
-            url = 'https://api.meetup.com/{0}/events/{1}/attendance?key={2}&only=member.id'.format(URL_GROUP, EVENT_ID, API_KEY)
-            response = requests.get(url)
-            uid = request.user.social_auth.get(provider='meetup').uid
-            register = False
-            if uid in str(response.json()):
-                register = True
-                ticket, created = Ticket.objects.get_or_create(user=request.user)
+    try:
+        if request.user.is_authenticated:
+            if not Ticket.objects.filter(user=request.user).exists():
+                url = 'https://api.meetup.com/{0}/events/{1}/attendance?key={2}&only=member.id'.format(URL_GROUP, EVENT_ID, API_KEY)
+                response = requests.get(url)
+                uid = request.user.social_auth.get(provider='meetup').uid
+                register = False
+                if uid in str(response.json()):
+                    register = True
+                    ticket, created = Ticket.objects.get_or_create(user=request.user)
+                    return render(request, 'dashboard.html', {
+                        'register': str(register.id),
+                        'ticket': ticket,
+                    })
+                return render(request, 'dashboard.html', {'register': register})
+            else:
                 return render(request, 'dashboard.html', {
-                    'register': register,
-                    'ticket': ticket,
+                    'register': True,
+                    'ticket': Ticket.objects.get(user=request.user),
                 })
-            return render(request, 'dashboard.html', {'register': register})
-        else:
-            return render(request, 'dashboard.html', {
-                'register': True,
-                'ticket': Ticket.objects.get(user=request.user),
-            })
-    return render(request, 'index.html', {})
+        return render(request, 'index.html', {})
+    except Exception as ex:
+        print(ex)
+        return render(request, 'index.html', {})
 
 
 def logout_view(request):
