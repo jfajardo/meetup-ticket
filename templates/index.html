@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main role="main" style="position: absolute;margin: auto;top: 0;right: 0;bottom: 0;left: 0;height: 400px;">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Meetup #3 - Python Pasto</h1>
+            <p class="lead text-muted">
+                Este registro se hace con el fin de validar su información para generar el certificado de asistencia.
+            </p>
+            <p>
+                <h5>🌍 <strong>Universidad Mariana - Auditorio Madre Caridad</strong></h5>
+                <h5>📅 <strong>Octubre 25 de 2018 - ⏰ 6pm: 8:30pm</strong></h5>
+            </p>
+            <p>
+                <a href="{% url 'social:begin' 'meetup' %}" class="btn btn-danger btn-lg"><i
+                        class="fab fa-meetup fa-lg"></i> Ingresar con Meetup</a>
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock content %}

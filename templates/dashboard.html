@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load qr_code %}
+
+{% block content %}
+{% include 'nav.html' %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    {% if messages %}
+    <p>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            {% for message in messages %}
+            <h6>{{ message }}</h6>
+            {% endfor %}
+        </div>
+    </p>
+    {% endif %}
+    <h1>👋 Hola!!! <a href="{% url 'me' %}" class="text-danger"  data-toggle="tooltip" data-placement="top" title="Actualizar Información"><strong>{{ user.first_name }} {{ user.last_name }}</strong></a></h1>
+    {% if register %}
+    <div id="ticket">
+        {% qr_from_text ticket.id size="10" image_format="png" %}
+    </div>
+    <button id="btn_print" class="btn btn-danger btn-lg"><i class="far fa-save fa-lg"></i> Guardar Ticket</button>
+    <p>
+        <h5>🌍 <strong>Universidad Mariana - Auditorio Madre Caridad</strong></h5>
+        <h5>📅 <strong>Octubre 25 de 2018 - ⏰ 6pm: 8:30pm</strong></h5>
+    </p>
+    {% else %}
+    <p>
+        <br>
+        <div class="alert alert-danger" role="alert">
+            <h2>😭️ Lo sentimos no estás registrado!<br>
+                <a href="https://www.meetup.com/es/Python-Pasto/events/255276841/" target="_blank" class="alert-link">Regístrate aquí!</a>
+            </h2>
+        </div>
+    </p>
+    {% endif %}
+</div>
+
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+        $('#btn_print').click(function () {
+            $("#ticket").printThis({
+                header: "<h1>Meetup #3 - Python Pasto</h1>",
+                footer: "<h2>{{ user.first_name }} {{ user.last_name }}</h2>"
+            });
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    });
+</script>
+{% endblock extra_js %}
